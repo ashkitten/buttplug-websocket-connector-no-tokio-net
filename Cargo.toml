@@ -1,0 +1,16 @@
+[package]
+name = "buttplug-websocket-connector-no-tokio-net"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+buttplug = { version = "9.0.7", default-features = false, features = ["tokio-runtime", "serialize-json"] }
+futures = "0.3.31"
+rustls = { version = "0.23.25", default-features = false, features = ["ring"] }
+tokio-tungstenite = { version = "0.26.2", default-features = false, features = ["rustls-tls-webpki-roots", "url", "handshake", "stream"] }
+tokio = { version = "1.44.1", features = ["rt"] }
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
+url = "2.5.4"
+
+[dev-dependencies]

@@ -1,0 +1,27 @@
+--- /dev/fd/63	2025-03-23 17:11:38.034238394 -0400
++++ src/websocket_server.rs	2025-03-23 16:38:36.476238243 -0400
+@@ -5,6 +5,7 @@
+ // Licensed under the BSD 3-Clause license. See LICENSE file in the project root
+ // for full license information.
+ 
++use super::tungstenite_connect::{TcpListener, TcpStream};
+ use crate::{
+   core::{
+     connector::{
+@@ -23,7 +24,6 @@
+ use futures::{future::BoxFuture, FutureExt, SinkExt, StreamExt};
+ use std::{sync::Arc, time::Duration};
+ use tokio::{
+-  net::{TcpListener, TcpStream},
+   sync::{
+     mpsc::{Receiver, Sender},
+     Notify,
+@@ -235,7 +235,7 @@
+           .map_err(|err| {
+             error!("Websocket server accept error: {:?}", err);
+             ButtplugConnectorError::TransportSpecificError(
+-              ButtplugConnectorTransportSpecificError::TungsteniteError(err),
++              ButtplugConnectorTransportSpecificError::GenericNetworkError(err.to_string()),
+             )
+           })?;
+         async_manager::spawn(async move {
